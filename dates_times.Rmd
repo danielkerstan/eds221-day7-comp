@@ -1,0 +1,109 @@
+---
+title: "Dates and Times"
+author: "Daniel Kerstan"
+date: "8/17/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lubridate)
+```
+
+### Play around with functions in `lubridate`
+
+```{r}
+my_date <- "03-15-1998"
+class(my_date)
+```
+
+ymd, mdy, dmy
+```{r}
+my_date_new <- lubridate::mdy(my_date)
+class(my_date_new)
+```
+### convert following to dates
+
+
+```{r}
+ex_1 <- "4/6/2005"
+mdy(ex_1)
+
+ex_2 <- "20100806"
+ymd(ex_2)
+
+ex_3 <- "12-Jun-1974"
+dmy(ex_3)
+
+ex_4 <- "02/07/1990"
+mdy(ex_4)
+
+
+ex_5 <- c(ex_1, ex_4)
+
+mdy(ex_5)
+```
+
+```{r}
+lubridate::dmy("20-03-2004")
+```
+
+### Times
+
+```{r}
+time <- "2020-08-12 11:18"
+ymd_hm(time)
+
+
+time_la <- with_tz(ex_5, "America/Los_Angeles")
+
+```
+```{r}
+date_time <- "2020-08-17 14:08"
+
+date_time_au <- ymd_hm(date_time)
+date_time_au_tz <- with_tz(date_time_au, "Australia/Sydney")
+```
+
+```{r}
+lubridate::week(date_time_au_tz)
+```
+```{r}
+my_bday <- ymd("1990-02-07")
+wday(my_bday, label = TRUE)
+```
+
+
+```{r}
+urchin_counts <- tribble(
+  ~date, ~species, ~size_mm,
+  "10/3/2020", "purple", 55,
+  "10/4/2020", "red", 48,
+  "11/17/2020", "red", 67
+)
+```
+
+```{r}
+urchin_counts_ymd <- urchin_counts %>% 
+  mutate(date = mdy(date)) %>% 
+  mutate(year= year(date)) %>% 
+  mutate(month = month(date))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
